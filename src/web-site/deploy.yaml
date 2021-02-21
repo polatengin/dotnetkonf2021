@@ -2,15 +2,23 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: web-site-deployment
+  labels:
+    app: web-site
 spec:
-  selector:
-    app: web-site-deployment
   replicas: 1
+  selector:
+    matchLabels:
+      app: web-site
   template:
+    metadata:
+      labels:
+        app: web-site
     spec:
       containers:
       - name: web-site
-        image: {IMAGE}
+        image: "{IMAGE}"
+        ports:
+        - containerPort: 80
 ---
 apiVersion: v1
 kind: Service
@@ -20,6 +28,5 @@ spec:
   selector:
     app: web-site
   ports:
-    - protocol: TCP
-      port: 80
-      targetPort: 80
+  - port: 80
+    protocol: TCP
