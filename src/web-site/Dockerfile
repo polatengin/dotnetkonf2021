@@ -12,6 +12,6 @@ FROM nginx:1.19-alpine
 
 WORKDIR /usr/share/nginx/html
 
-COPY --from=builder /src/dist .
+COPY --from=builder /src/build .
 
 RUN nginx
