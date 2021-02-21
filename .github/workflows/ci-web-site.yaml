@@ -28,6 +28,8 @@ jobs:
 
           TAG="v$(date '+%Y%m%d%H%M%S')"
 
+          cd src/web-site
+
           az acr build -t "${PROJECT_NAME}/web-site:${TAG}" --registry "${PROJECT_NAME}acr" .
 
           ACR_URL=$(az acr show --name "${PROJECT_NAME}acr" --query "loginServer" --output tsv)
