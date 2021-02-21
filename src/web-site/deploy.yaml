@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-site-deployment
+spec:
+  selector:
+    label: web-site-deployment
+  replicas: 1
+  template:
+    spec:
+      containers:
+      - name: web-site
+        image: {IMAGE}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: web-site-service
+spec:
+  selector:
+    app: web-site
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80

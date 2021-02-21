@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-product-deployment
+spec:
+  selector:
+    label: api-product-deployment
+  replicas: 1
+  template:
+    spec:
+      containers:
+      - name: api-product
+        image: {IMAGE}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: api-product-service
+spec:
+  selector:
+    app: api-product
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 5000

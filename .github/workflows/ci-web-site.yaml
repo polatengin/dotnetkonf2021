@@ -1,0 +1,35 @@
+name: ci_web_site
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - "master"
+    paths:
+      - "src/web-site/**"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: az cli login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: deployment
+        run: |
+          PROJECT_NAME="dotnetkonf2021"
+
+          az acr login --name "${PROJECT_NAME}acr"
+          az aks get-credentials --resource-group "${PROJECT_NAME}-rg" --name "${PROJECT_NAME}-aks"
+
+          TAG="v$(date '+%Y%m%d%H%M%S')"
+
+          az acr build -t "${PROJECT_NAME}/web-site:${TAG}" --registry "${PROJECT_NAME}acr" .
+
+          ACR_URL=$(az acr show --name "${PROJECT_NAME}acr" --query "loginServer" --output tsv)
+
+          cat ./deploy.yaml | sed s/"{IMAGE}"/"${ACR_URL}\/${PROJECT_NAME}\/web-site:${TAG}" | kubectl apply -f -
