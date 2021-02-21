@@ -4,7 +4,7 @@ metadata:
   name: web-site-deployment
 spec:
   selector:
-    label: web-site-deployment
+    app: web-site-deployment
   replicas: 1
   template:
     spec:

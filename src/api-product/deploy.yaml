@@ -4,7 +4,7 @@ metadata:
   name: api-product-deployment
 spec:
   selector:
-    label: api-product-deployment
+    app: api-product-deployment
   replicas: 1
   template:
     spec:
