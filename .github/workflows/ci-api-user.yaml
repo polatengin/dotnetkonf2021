@@ -23,6 +23,8 @@ jobs:
         run: |
           PROJECT_NAME="dotnetkonf2021"
 
+          cd src/api-user/
+
           az acr login --name "${PROJECT_NAME}acr"
           az aks get-credentials --resource-group "${PROJECT_NAME}-rg" --name "${PROJECT_NAME}-aks"
 
