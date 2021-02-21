@@ -20,6 +20,6 @@ spec:
           servicePort: 80
         path: /api/users/(.*)
       - backend:
-          serviceName: web-site
+          serviceName: web-site-service
           servicePort: 80
         path: /(.*)
