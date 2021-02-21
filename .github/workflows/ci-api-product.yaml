@@ -34,4 +34,4 @@ jobs:
 
           ACR_URL=$(az acr show --name "${PROJECT_NAME}acr" --query "loginServer" --output tsv)
 
-          cat ./deploy.yaml | sed s/"{IMAGE}"/"${ACR_URL}\/${PROJECT_NAME}\/api-product:${TAG}" | kubectl apply -f -
+          cat ./deploy.yaml | sed s/"{IMAGE}"/"${ACR_URL}\/${PROJECT_NAME}\/api-product:${TAG}"/g | kubectl apply -f -
